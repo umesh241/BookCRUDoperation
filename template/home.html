@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+          <h1>Add New Book</h1>
+          <form action="/add/" method="POST">
+            {% csrf_token %}
+            {{form.as_p}}
+            <hr>
+            <input type="submit" value="ADD">
+          </form>
+          {% if books|length == 0 %}
+            <br>
+              <p>No books</p>
+            <br>
+          {%else%}
+            <table border="1">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Title</th>
+                  <th>Author</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for book in books %}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+                  <td>{{book.Title}}</td>
+                  <td>{{book.Author}}</td>
+                  <td>
+                    <a href="/delete/{{book.id}}" title="Delete" >Delete</a>
+                    <a href="/edit/{{book.id}}" title="Edit" >Edit</a>
+                  </td>
+                </tr>
+                {%endfor%}
+              </tbody>
+            </table>
+          {%endif%}
+{% endblock %}
